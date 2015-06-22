@@ -1,0 +1,91 @@
+<link rel="import" href="../bower_components/paper-styles/paper-styles.html">
+
+<link rel="import" href="saint-laurent-badge.html">
+<link rel="import" href="saint-laurent-time.html">
+            
+<dom-module id="saint-laurent-station">
+  <style type="text/css">
+    :host {
+      display: block;
+      position: relative;
+      margin: 0px;
+      padding: 10px;
+
+      /*@apply(--shadow-elevation-3dp);*/
+    }
+
+    .station {
+      @apply(--layout-horizontal);
+      @apply(--layout-center);
+    }
+    .badge {
+    }
+    .times {
+      @apply(--layout-vertical);
+      padding-left: 10px;
+    }
+
+  </style>
+  <template>
+    <iron-ajax 
+      id="keolisApi"
+      auto
+      handle-as="json"
+      last-response="{{resp}}"
+      url="/api/2.0"
+      >
+    </iron-ajax>
+
+<!--     <iron-ajax 
+      id="keolisApi"
+      auto
+      handle-as="json"
+      last-response="{{resp}}"
+      >
+    </iron-ajax> -->
+  
+    <div class="station">
+      <div class="times">
+        <template is="dom-repeat" items="{{resp.departures}}">
+          <saint-laurent-time time="{{item}}"></saint-laurent-time>
+        </template>
+      </div>
+    </div>
+
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+    is: "saint-laurent-station",
+
+    properties:{
+      resp: { 
+        type: Object 
+      },
+      stopId: {
+        type: String
+      },
+      routeId: {
+        type: String
+      },
+      directionId: {
+        type: String
+      },
+      label: {
+        type: String
+      }
+    },
+
+
+    ready: function() {
+         // this.$.keolisApi.url = "/api/" + this.stopId + "/" + this.routeId + "/" + this.directionId;
+         this.$.keolisApi.params = {
+          "stop": this.stopId , 
+          "route": this.routeId, 
+          "direction": this.directionId
+        };
+    }
+
+  });
+</script>

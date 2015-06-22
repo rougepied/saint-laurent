@@ -1,0 +1,86 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+
+<link rel="import" href="../bower_components/paper-header-panel/paper-header-panel.html">
+<link rel="import" href="../bower_components/paper-item/paper-icon-item.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-item/paper-item-body.html">
+<link rel="import" href="../bower_components/paper-styles/paper-styles.html">
+
+<link rel="import" href="saint-laurent-station.html">
+
+<dom-module id="saint-laurent">
+  <style type="text/css">
+    :host {
+      display: block;
+      position: relative;
+      margin: 0px;
+      @apply(--layout-fit);
+    }
+
+
+    .paper-header {
+      height: 60px;
+      /*font-size: 16px;*/
+      line-height: 60px;
+      padding: 0 10px;
+      color: white;
+      transition: height 0.2s;
+    }
+
+    .blue .paper-header {
+      background-color: var(--paper-light-blue-500);
+    }
+
+    .station {
+      @apply(--layout-vertical);
+      padding-top: 10px;
+    }
+  </style>
+
+  <template>
+    <paper-header-panel class="blue">
+      <div class="paper-header">Saint-Laurent</div>
+      <div class="content">
+
+        <template is="dom-repeat" items="{{stations}}">
+          <paper-item>
+          <paper-item-body>
+          <paper-icon-item >
+          <div item-icon>
+            <saint-laurent-badge label="{{item.label}}" color="{{item.color}}" ></saint-laurent-badge></paper-icon-item>
+          </div>
+            <saint-laurent-station 
+                stop-id="{{item.stop}}" 
+                route-id="{{item.route}}" 
+                direction-id="{{item.direction}}" 
+                label="{{item.label}}" 
+                color="{{item.color}}"></saint-laurent-station>
+          </paper-item-body>
+          </paper-item>
+        </template>
+          
+      </div>
+    </paper-header-panel>
+
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+    is: "saint-laurent",
+
+    properties:{},
+    ready: function () {
+      this.stations = [
+        {stop: "1372", route: "0009", direction:"0" , label: "9",  color: "blue"},
+        {stop: "1485", route: "0071", direction:"0" , label: "71", color: ""},
+        {stop: "1103", route: "0003", direction:"0" , label: "3",  color: "darkgreen"},
+        {stop: "1485", route: "0051", direction:"0" , label: "51", color: ""}
+      ];
+    }
+
+  });
+</script>

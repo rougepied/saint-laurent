@@ -1,0 +1,28 @@
+{
+  "name": "saint-laurent",
+  "version": "0.0.0",
+  "authors": [
+    "rougepied <arnaud@rougepied.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "moment": "~2.10.3",
+    "polymer": "Polymer/polymer#^1.0.0",
+    "iron-flex-layout": "PolymerElements/iron-flex-layout#~1.0.1",
+    "iron-ajax":        "PolymerElements/iron-ajax#~1.0.2",
+    "paper-item":         "PolymerElements/paper-item#^1.0.0",
+    "paper-toolbar":      "PolymerElements/paper-toolbar#^1.0.0",
+    "paper-icon-button":  "PolymerElements/paper-icon-button#^1.0.0",
+    "paper-header-panel": "PolymerElements/paper-header-panel#^1.0.0"
+  },
+  "devDependencies": {
+    "web-component-tester": "*"
+  }
+}

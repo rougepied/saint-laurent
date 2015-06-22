@@ -1,0 +1,41 @@
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<script type="text/javascript" src="../bower_components/moment/moment.js"></script>
+<script type="text/javascript" src="../bower_components/moment/locale/fr.js"></script>
+
+
+<dom-module id="saint-laurent-time">
+  <template>
+    <span>{{display}}</span>
+  </template>
+</dom-module>
+
+<script>
+
+  Polymer({
+    is: "saint-laurent-time",
+
+    properties:{
+      time: { 
+        type: String 
+      },
+
+      display: {
+        type: String,
+        computed: "_getDisplayTime(time)"
+      }
+    },
+
+    _getDisplayTime: function(time) {
+      var theDate, display;
+
+      moment.locale('fr');
+      theDate = moment(time);
+
+      display = theDate.format("hh:mm");
+
+      return display + " (" + theDate.fromNow() + ")";
+    }
+
+  });
+</script>

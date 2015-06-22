@@ -1,0 +1,49 @@
+<dom-module id="saint-laurent-badge">
+  <style type="text/css">
+    :host {
+      display: inline-block;
+      position: relative;
+      margin: 0;
+
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      overflow: hidden;
+      background: #ccc;
+    }
+
+    #label {
+      @apply(--layout-vertical);
+      @apply(--layout-center-center);
+      @apply(--layout-fit);
+    }
+
+  </style>
+
+  <template>
+      <div id="label">{{label}}</div>
+  </template>
+</dom-module>
+
+
+<script>
+  Polymer({
+    is: "saint-laurent-badge",
+
+    properties:{
+      label: { 
+        type: String 
+      },
+      color: {
+          type: String
+      }
+    },
+
+
+    ready: function() {
+        // this.style['background-color'] = this.color;
+      this.$.label.style['background-color'] = this.color;
+    }
+
+  });
+</script>
