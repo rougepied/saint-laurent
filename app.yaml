@@ -7,19 +7,13 @@ handlers:
 - url: /api/.*
   script: _go_app
 - url: /
-  static_files: static/index.html
-  upload: static/index.html
+  static_files: public/index.html
+  upload: public/index.html
 - url: /
-  static_dir: static
+  static_dir: public
 
 skip_files:
-- ^(.*/)?.*/static/bower_components/web-component-tester/.*$
-- ^(.*/)?.*/static/bower_components/accessibility-developer-tools/.*$
-- ^(.*/)?.*/static/bower_components/async/.*$
-- ^(.*/)?.*/static/bower_components/chai/.*$
-- ^(.*/)?.*/static/bower_components/lodash/.*$
-- ^(.*/)?.*/static/bower_components/mocha/.*$
-- ^(.*/)?.*/static/bower_components/sinon-chai/.*$
-- ^(.*/)?.*/static/bower_components/sinonjs/.*$
-- ^(.*/)?.*/static/bower_components/stacky/.*$
+- ^(.*/)?.*/static/bower_components/.*$
 - ^(.*/)?.*/static/*/bower\.json$
+- ^(.*/)?.*/node_modules/.*$
+- ^(.*/)?.*/package\.json$

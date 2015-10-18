@@ -11,15 +11,13 @@
 </dom-module>
 
 <script>
-
   Polymer({
     is: "saint-laurent-time",
 
     properties:{
-      time: { 
-        type: String 
+      time: {
+        type: String
       },
-
       display: {
         type: String,
         computed: "_getDisplayTime(time)"
@@ -32,7 +30,7 @@
       moment.locale('fr');
       theDate = moment(time);
 
-      display = theDate.format("hh:mm");
+      display = theDate.format("HH:mm");
 
       return display + " (" + theDate.fromNow() + ")";
     }
