@@ -1,8 +1,3 @@
-<link rel="import" href="../bower_components/paper-styles/paper-styles.html">
-
-<link rel="import" href="saint-laurent-badge.html">
-<link rel="import" href="saint-laurent-time.html">
-            
 <dom-module id="saint-laurent-station">
   <style type="text/css">
     :host {
@@ -27,7 +22,7 @@
 
   </style>
   <template>
-    <iron-ajax 
+    <iron-ajax
       id="keolisApi"
       auto
       handle-as="json"
@@ -36,18 +31,18 @@
       >
     </iron-ajax>
 
-<!--     <iron-ajax 
+<!--     <iron-ajax
       id="keolisApi"
       auto
       handle-as="json"
       last-response="{{resp}}"
       >
     </iron-ajax> -->
-  
+
     <div class="station">
       <div class="times">
-        <template is="dom-repeat" items="{{resp.departures}}">
-          <saint-laurent-time time="{{item}}"></saint-laurent-time>
+        <template is="dom-repeat" items="[[resp.departures]]" as="item">
+          <saint-laurent-time time="[[item]]"></saint-laurent-time>
         </template>
       </div>
     </div>
@@ -60,8 +55,8 @@
     is: "saint-laurent-station",
 
     properties:{
-      resp: { 
-        type: Object 
+      resp: {
+        type: Object
       },
       stopId: {
         type: String
@@ -81,8 +76,8 @@
     ready: function() {
          // this.$.keolisApi.url = "/api/" + this.stopId + "/" + this.routeId + "/" + this.directionId;
          this.$.keolisApi.params = {
-          "stop": this.stopId , 
-          "route": this.routeId, 
+          "stop": this.stopId ,
+          "route": this.routeId,
           "direction": this.directionId
         };
     }

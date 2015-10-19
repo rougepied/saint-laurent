@@ -17,18 +17,30 @@ import (
 
 func main() {
 	var key = flag.String("key", keyDefault, "Keolis API Key")
+	var port = flag.String("port", "8080", "port. (ex \"8080\")")
+	var dev = flag.Bool("dev", false, "use this flag to serve src directory")
 	flag.Parse()
 
 	if key == nil {
 		*key = keyDefault
 	}
+	if port == nil {
+		*port = "8080"
+	}
+	if dev == nil {
+		*dev = false
+	}
 
 	// serving API
 	http.Handle("/api/2.0", handleApi(*key))
 	// serving static files
-	http.Handle("/", http.FileServer(http.Dir("./static/")))
+	if *dev {
+		http.Handle("/", http.FileServer(http.Dir("./src/")))
+	} else {
+		http.Handle("/", http.FileServer(http.Dir("./public/")))
+	}
 
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(":"+*port, nil)
 }
 
 func debugf(r *http.Request, format string, args ...interface{}) {
