@@ -6,8 +6,7 @@ import gulpLoadPlugins from 'gulp-load-plugins';
 var $ = gulpLoadPlugins();
 
 gulp.task('default', () => {
-  return gulp
-    .src('src/index.html', {
+  return gulp.src('src/index.html', {
       base: "./src"
     })
     .pipe($.plumber())

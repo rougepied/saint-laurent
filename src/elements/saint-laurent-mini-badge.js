@@ -2,9 +2,9 @@
   'use-strict';
 
   const template = `
+
   <style type="text/css">
-    :host {
-      display: inline;
+    .saint-laurent-mini-badge {
       margin: 0;
 
       width: 20px;
@@ -17,7 +17,7 @@
       line-height: 20px;
     }
   </style>
-  <div id="container"></div>
+  <div class="saint-laurent-mini-badge" id="container"></div>
   `;
 
   class MiniBadge extends HTMLElement {

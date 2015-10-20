@@ -39,7 +39,8 @@
         <template is="dom-repeat" items="[[resp.departures]]" as="item">
           <div class="inner-time">
             <saint-laurent-mini-badge label$="[[label]]" color$="[[color]]"></saint-laurent-mini-badge>
-            <saint-laurent-time time="[[item]]"></saint-laurent-time>
+            &nbsp;
+            <saint-laurent-time-new time$="[[item]]"></saint-laurent-time-new>
           </div>
         </template>
       </div>
