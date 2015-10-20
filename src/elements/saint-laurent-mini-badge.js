@@ -1,7 +1,7 @@
 (function() {
   'use-strict';
 
-  let template = `
+  const template = `
   <style type="text/css">
     :host {
       display: inline;
@@ -17,7 +17,7 @@
       line-height: 20px;
     }
   </style>
-  <div id="container"></span>
+  <div id="container"></div>
   `;
 
   class MiniBadge extends HTMLElement {

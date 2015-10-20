@@ -4,17 +4,22 @@
       display: block;
       position: relative;
       margin: 0px;
-      @apply(--layout-fit);
     }
   </style>
   <template>
     <template is="dom-repeat" items="{{stations}}">
       <saint-laurent-station
-          stop-id="{{item.stop}}"
-          route-id="{{item.route}}"
-          direction-id="{{item.direction}}"
-          label="{{item.label}}"
-          color="{{item.color}}"></saint-laurent-station>
+          stop-id="[[item.stop]]"
+          route-id="[[item.route]]"
+          direction-id="[[item.direction]]"
+          label="[[item.label]]"
+          color="[[item.color]]"></saint-laurent-station>
+      <saint-laurent-station-new
+          stop-id="[[item.stop]]"
+          route-id="[[item.route]]"
+          direction-id="[[item.direction]]"
+          label="[[item.label]]"
+          color="[[item.color]]"></saint-laurent-station-new>
     </template>
   </template>
 </dom-module>
