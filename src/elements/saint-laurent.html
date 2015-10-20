@@ -6,48 +6,16 @@
       margin: 0px;
       @apply(--layout-fit);
     }
-
-
-    .paper-header {
-      height: 60px;
-      /*font-size: 16px;*/
-      line-height: 60px;
-      padding: 0 10px;
-      color: white;
-      transition: height 0.2s;
-    }
-
-    .blue .paper-header {
-      background-color: var(--paper-light-blue-500);
-    }
-
-    .station {
-      @apply(--layout-vertical);
-      padding-top: 10px;
-    }
   </style>
-
   <template>
-    <paper-header-panel class="blue">
-      <div class="paper-header">Saint-Laurent</div>
-      <div class="content">
-
-        <template is="dom-repeat" items="{{stations}}">
-          <paper-item>
-          <paper-item-body>
-            <saint-laurent-station
-                stop-id="{{item.stop}}"
-                route-id="{{item.route}}"
-                direction-id="{{item.direction}}"
-                label="{{item.label}}"
-                color="{{item.color}}"></saint-laurent-station>
-          </paper-item-body>
-          </paper-item>
-        </template>
-
-      </div>
-    </paper-header-panel>
-
+    <template is="dom-repeat" items="{{stations}}">
+      <saint-laurent-station
+          stop-id="{{item.stop}}"
+          route-id="{{item.route}}"
+          direction-id="{{item.direction}}"
+          label="{{item.label}}"
+          color="{{item.color}}"></saint-laurent-station>
+    </template>
   </template>
 </dom-module>
 

@@ -21,8 +21,8 @@ gulp.task('default', () => {
       onlySplit: false
     })))
     .pipe($.if('*.js', $.babel({
-      blacklist: ['useStrict'],
-      compact: false
+      // compact: false,
+      blacklist: ['useStrict']
     })))
     .on("error", console.log)
     .pipe($.if('*.js', $.uglify({
