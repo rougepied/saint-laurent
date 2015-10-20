@@ -10,6 +10,7 @@ gulp.task('default', () => {
     .src('src/index.html', {
       base: "./src"
     })
+    .pipe($.plumber())
     .pipe($.vulcanize({
       inlineScripts: true,
       // inlineCss: true,
@@ -20,8 +21,10 @@ gulp.task('default', () => {
       onlySplit: false
     })))
     .pipe($.if('*.js', $.babel({
-      blacklist: ['useStrict']
+      blacklist: ['useStrict'],
+      compact: false
     })))
+    .on("error", console.log)
     .pipe($.if('*.js', $.uglify({
       mangle: false
     })))

@@ -5,8 +5,6 @@
       position: relative;
       margin: 0px;
       padding: 10px;
-
-      /*@apply(--shadow-elevation-3dp);*/
     }
 
     .station {
@@ -20,6 +18,10 @@
       padding-left: 10px;
     }
 
+    .inner-time {
+        @apply(--layout-horizontal);
+    }
+
   </style>
   <template>
     <iron-ajax
@@ -31,18 +33,13 @@
       >
     </iron-ajax>
 
-<!--     <iron-ajax
-      id="keolisApi"
-      auto
-      handle-as="json"
-      last-response="{{resp}}"
-      >
-    </iron-ajax> -->
-
     <div class="station">
       <div class="times">
         <template is="dom-repeat" items="[[resp.departures]]" as="item">
-          <saint-laurent-time time="[[item]]"></saint-laurent-time>
+          <div class="inner-time">
+            <saint-laurent-mini-badge label$="[[label]]" color$="[[color]]"></saint-laurent-mini-badge>
+            <saint-laurent-time time="[[item]]"></saint-laurent-time>
+          </div>
         </template>
       </div>
     </div>

@@ -4,8 +4,7 @@
   let template = `
   <style type="text/css">
     :host {
-      display: inline-block;
-      position: relative;
+      display: inline;
       margin: 0;
 
       width: 20px;
@@ -18,17 +17,16 @@
       line-height: 20px;
     }
   </style>
-  <div id="label"></div>
+  <div id="container"></span>
   `;
-
 
   class MiniBadge extends HTMLElement {
     createdCallback() {
       this.createShadowRoot().innerHTML = template;
-
-      this.$label = this.shadowRoot.getElementById('label');
+      this.$container = this.shadowRoot.getElementById('container');
 
       this._updateLabel(this.getAttribute('label'));
+      this._updateColor(this.getAttribute('color'));
     };
 
     attributeChangedCallback(attrName, oldVal, newVal) {
@@ -36,13 +34,20 @@
         case "label":
           this._updateLabel(newVal);
           break;
+        case "color":
+          this._updateColor(newVal);
+          break;
       }
     };
 
     _updateLabel(value) {
-      console.log(this.$label);
-      this.$label.innerHTML = value;
+      this.$container.innerHTML = value;
     };
+
+    _updateColor(value) {
+      this.$container.style['background-color'] = value;
+    }
+
   }
 
   document.registerElement('saint-laurent-mini-badge', MiniBadge);

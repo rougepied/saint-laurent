@@ -35,10 +35,6 @@
         <template is="dom-repeat" items="{{stations}}">
           <paper-item>
           <paper-item-body>
-          <paper-icon-item >
-          <div item-icon>
-            <saint-laurent-badge label="{{item.label}}" color="{{item.color}}" ></saint-laurent-badge></paper-icon-item>
-          </div>
             <saint-laurent-station
                 stop-id="{{item.stop}}"
                 route-id="{{item.route}}"
