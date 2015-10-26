@@ -1,4 +1,6 @@
 {
+  "private": true,
+  "License": "WTFPL",
   "devDependencies": {
     "babel-core": "^5.8.25",
     "gulp": "*",
