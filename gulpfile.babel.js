@@ -5,7 +5,7 @@ import gulpLoadPlugins from 'gulp-load-plugins';
 
 var $ = gulpLoadPlugins();
 
-gulp.task('default', () => {
+gulp.task('build', () => {
   return gulp.src('src/index.html', {
       base: "./src"
     })
@@ -33,4 +33,10 @@ gulp.task('default', () => {
       spare: true
     })))
     .pipe(gulp.dest('public'));
+});
+
+gulp.task('default', ['build']);
+
+gulp.task('watch', () => {
+  gulp.watch('src/**/*', ['build']);
 });
