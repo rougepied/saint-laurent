@@ -14,12 +14,12 @@
           direction-id="[[item.direction]]"
           label="[[item.label]]"
           color="[[item.color]]"></saint-laurent-station>
-      <saint-laurent-station-new
-          stop-id="[[item.stop]]"
-          route-id="[[item.route]]"
-          direction-id="[[item.direction]]"
-          label="[[item.label]]"
-          color="[[item.color]]"></saint-laurent-station-new>
+      <!-- <saint-laurent-station-new
+          stop-id$="[[item.stop]]"
+          route-id$="[[item.route]]"
+          direction-id$="[[item.direction]]"
+          label$="[[item.label]]"
+          color$="[[item.color]]"></saint-laurent-station-new> -->
     </template>
   </template>
 </dom-module>
@@ -36,6 +36,28 @@
         {stop: "1103", route: "0003", direction:"0" , label: "3",  color: "darkgreen"},
         {stop: "1485", route: "0051", direction:"0" , label: "51", color: ""}
       ];
+      this._getAndSort();
+    },
+
+    _getAndSort() {
+      var fetches = [];
+      for (let i of this.stations) {
+        let formData = new URLSearchParams();
+        formData.append("stop", i.stopId);
+        formData.append("route", i.routeId);
+        formData.append("direction", i.directionId);
+
+        fetches.push(fetch("/api/2.0", {method: 'GET', body: formData}).then(i => i.text()));
+      }
+
+      Promise.all(fetches).then(function(values) {
+        console.log(values);
+        return values.map(i => {
+          console.log('i', i);
+          return i.text();
+        });
+      }).then(i => console.log(i));
+
     }
 
   });
