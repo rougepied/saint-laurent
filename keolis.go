@@ -163,7 +163,7 @@ func handleApi(key string) http.Handler {
 		routeID := r.FormValue("route")
 		directionID := r.FormValue("direction")
 
-		// fmt.Printf("%s, %s, %s\n", stopID, routeID, directionID)
+		debugf(r, "\n%s, %s, %s\n", stopID, routeID, directionID)
 
 		// getting data from Keolis
 		ret, err := getBusNextDepartures(r, key, stopID, routeID, directionID)
@@ -184,7 +184,7 @@ func handleApi(key string) http.Handler {
 			return
 		}
 
-		debugf(r, "réponse : %s", msg)
+		//		debugf(r, "réponse : %s", msg)
 		fmt.Fprintf(w, "%s", msg)
 	})
 }
