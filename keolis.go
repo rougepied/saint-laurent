@@ -61,6 +61,7 @@ type Data struct {
 	StopLine      *StopLine `xml:"stopline" json:"stopline"`
 }
 
+// StopLine of the Data
 type StopLine struct {
 	Stop       string       `xml:"stop" json:"stop"`
 	Route      string       `xml:"route" json:"route"`
@@ -85,6 +86,7 @@ type Stopline struct {
 	Departures Departures `xml:"departures"`
 }
 
+// Departures is a list of Departure
 type Departures []*Departure
 
 func (d Departures) String() {
@@ -93,16 +95,17 @@ func (d Departures) String() {
 	}
 }
 
+// Stations is a list of Station
 type Stations []*Station
 
 // Station for a bus or a metro
 type Station struct {
-	Id             int     `xml:"id" json:"id"`
+	ID             int     `xml:"id" json:"id"`
 	Number         int     `xml:"number" json:"number"`
 	Name           string  `xml:"name" json:"name"`
 	State          int     `xml:"state" json:"state"`
 	Latitude       float64 `xml:"latitude" json:"latitude"`
-	Longitude      float64 `xml:longitude" json:"longitude"`
+	Longitude      float64 `xml:"longitude" json:"longitude"`
 	SlotsAvailable int     `xml:"slotsavailable" json:"slotsavailable"`
 	BikesAvailable int     `xml:"bikesavailable" json:"bikesavailable"`
 	Pos            int     `xml:"pos" json:"pos"`
@@ -129,7 +132,8 @@ func (t *timeValue) UnmarshalXMLAttr(attr xml.Attr) error {
 	return nil
 }
 
-func (c *timeValue) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+// UnmarshalXML unmarshal the timeValue according to the specific format
+func (t *timeValue) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	var v string
 	err := d.DecodeElement(&v, &start)
 	if err != nil {
@@ -139,22 +143,37 @@ func (c *timeValue) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	if err != nil {
 		return err
 	}
-	*c = timeValue{parse}
+	*t = timeValue{parse}
 	return nil
 }
 
+// Schedule is the content of Response
 type Schedule struct {
-	Time timeValue
-	Line string
+	Time timeValue `xml:"time" json:"time"`
+	Line string    `xml:"line" json:"line"`
 }
 
+// Schedules is a list of Schedule
 type Schedules []*Schedule
 
-type Response struct {
-	Schedules *Schedules
+// Append a Schedule to the Schedules
+func (s *Schedules) Append(item *Schedule) {
+	*s = append(*s, item)
 }
 
-func handleApi(key string) http.Handler {
+// Response is the response to "/api/3.0"
+type Response struct {
+	Schedules *Schedules `xml:"schedules" json:"schedules"`
+	Error     string     `xml:"error" json:"error"`
+}
+
+// NewResponse create a new Response
+func NewResponse() *Response {
+	return &Response{Schedules: &Schedules{}}
+}
+
+// handleAPI3 handle response to "/api/3.0"
+func handleAPI3(key string) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		// parsing body
 
@@ -163,7 +182,42 @@ func handleApi(key string) http.Handler {
 		routeID := r.FormValue("route")
 		directionID := r.FormValue("direction")
 
-		debugf(r, "\n%s, %s, %s\n", stopID, routeID, directionID)
+		//debugf(r, "\n%s, %s, %s\n", stopID, routeID, directionID)
+
+		// getting data from Keolis
+		ret, err := getBusNextDepartures3(r, key, stopID, routeID, directionID)
+		if err != nil {
+			http.Error(w, err.Error(), 500)
+			debugf(r, "%s", err.Error())
+			return
+		}
+
+		// responding
+		headers := w.Header()
+		headers["Content-Type"] = []string{"application/json"}
+
+		msg, err := json.Marshal(ret)
+		if err != nil {
+			http.Error(w, err.Error(), 500)
+			debugf(r, "%s", err.Error())
+			return
+		}
+
+		debugf(r, "réponse : %s", msg)
+		fmt.Fprintf(w, "%s", msg)
+
+	})
+}
+
+// handleApi handle response to "/api/2.0"
+func handleAPI(key string) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		// parsing body
+
+		// vars := mux.Vars(r)
+		stopID := r.FormValue("stop")
+		routeID := r.FormValue("route")
+		directionID := r.FormValue("direction")
 
 		// getting data from Keolis
 		ret, err := getBusNextDepartures(r, key, stopID, routeID, directionID)
@@ -199,8 +253,8 @@ func unmarshalResponse(data []byte) (OpenData, error) {
 }
 
 func getBusNextDepartures(r *http.Request, key, stopID, routeID, directionID string) (*StopLine, error) {
-	var Url *url.URL
-	Url, err := url.Parse("http://data.keolis-rennes.com/xml/")
+	var URL *url.URL
+	URL, err := url.Parse("http://data.keolis-rennes.com/xml/")
 	if err != nil {
 		debugf(r, "%s", err.Error())
 		return nil, err
@@ -213,13 +267,13 @@ func getBusNextDepartures(r *http.Request, key, stopID, routeID, directionID str
 	parameters.Add("param[stop][]", stopID)
 	parameters.Add("param[route][]", routeID)
 	parameters.Add("param[direction][]", directionID)
-	Url.RawQuery = parameters.Encode()
+	URL.RawQuery = parameters.Encode()
 
-	fmt.Println(Url.String())
+	fmt.Println(URL.String())
 
 	// getting URL result
 	// resp, err := http.Get(Url.String())
-	resp, err := get(r, Url.String())
+	resp, err := get(r, URL.String())
 	if err != nil {
 		debugf(r, "%s", err.Error())
 		return nil, err
@@ -243,5 +297,70 @@ func getBusNextDepartures(r *http.Request, key, stopID, routeID, directionID str
 		return nil, err
 	}
 	return o.Answer.Data.StopLine, err
+}
 
+//
+func getBusNextDepartures3(r *http.Request, key, stopID, routeID, directionID string) (*Response, error) {
+	var URL *url.URL
+	URL, err := url.Parse("http://data.keolis-rennes.com/xml/")
+	if err != nil {
+		debugf(r, "%s", err.Error())
+		return nil, err
+	}
+	parameters := url.Values{}
+	parameters.Add("key", key)
+	parameters.Add("cmd", "getbusnextdepartures")
+	parameters.Add("version", "2.2")
+	parameters.Add("param[mode]", "stopline")
+	parameters.Add("param[stop][]", stopID)
+	parameters.Add("param[route][]", routeID)
+	parameters.Add("param[direction][]", directionID)
+	URL.RawQuery = parameters.Encode()
+
+	//fmt.Println(URL.String())
+
+	resp, err := get(r, URL.String())
+	if err != nil {
+		debugf(r, "%s", err.Error())
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		debugf(r, "%s", err.Error())
+		return nil, err
+	}
+
+	o, err := unmarshalResponse(body)
+	if err != nil {
+		debugf(r, "%s", err.Error())
+		return nil, err
+	}
+
+	answer := o.Answer
+	if answer == nil {
+		debugf(r, "Response %v\n", o)
+		return nil, err
+	}
+
+	response := NewResponse()
+	if answer.Status.Code != 0 {
+		response.Error = answer.Status.Message
+		return response, err
+	}
+
+	if answer.Data == nil || answer.Data.StopLine == nil {
+		debugf(r, "Response %v\n", o)
+		return nil, err
+	}
+
+	for _, d := range answer.Data.StopLine.Departures {
+		response.Schedules.Append(&Schedule{
+			Line: answer.Data.StopLine.Route,
+			Time: d.timeValue,
+		})
+	}
+
+	return response, err
 }

@@ -32,7 +32,8 @@ func main() {
 	}
 
 	// serving API
-	http.Handle("/api/2.0", handleApi(*key))
+	http.Handle("/api/2.0", handleAPI(*key))
+	http.Handle("/api/3.0", handleAPI3(*key))
 	// serving static files
 	if *dev {
 		http.Handle("/", http.FileServer(http.Dir("./src/")))
