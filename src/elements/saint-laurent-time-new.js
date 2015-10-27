@@ -3,7 +3,7 @@
 
   class SaintLaurentTime extends HTMLElement {
     createdCallback() {
-      this.createShadowRoot().innerHTML = `<div id="container"></div>`;
+      this.createShadowRoot().innerHTML = `<div style="display:inline;" id="container"></div>`;
       this.$container = this.shadowRoot.getElementById('container');
 
       this._updateTime(this.getAttribute('time'));
@@ -28,6 +28,5 @@
       this.$container.innerHTML = display + " (" + theDate.fromNow() + ")";
     }
   }
-
   document.registerElement('saint-laurent-time-new', SaintLaurentTime);
 })();
