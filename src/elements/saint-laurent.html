@@ -59,8 +59,17 @@
         );
       }
 
-      Promise.all(fetches).then(i => console.log(i));
-
+      Promise.all(fetches).then(values => {
+        return values.filter(i => i !== null)
+        .map(i => i.departures.map(j => {
+            return {
+              "stop": i.stop,
+              "route": i.route,
+              "direction": i.direction,
+              "time": j
+            };
+          }))
+      }).then(i => console.log(i));
     }
 
   });
