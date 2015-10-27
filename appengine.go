@@ -17,7 +17,7 @@ import (
 )
 
 func init() {
-	http.Handle("/api/2.0", handleApi(keyDefault))
+	http.Handle("/api/2.0", handleAPI(keyDefault))
 }
 
 func debugf(r *http.Request, format string, args ...interface{}) {
