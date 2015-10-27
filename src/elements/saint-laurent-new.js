@@ -11,6 +11,18 @@
   <div class="saint-laurent" id="container"></div>
   `;
 
+  function templateStation(s) {
+    let time = s.time;
+    let line = s.line;
+
+    return `
+  <div style="display:inline;position:relative;">
+    <saint-laurent-badge label="${line}"></saint-laurent-badge>
+    &nbsp;
+    <saint-laurent-time-new time="${time}"></saint-laurent-time-new>
+  </div>`
+  }
+
   function newStations(stop, route, direction) {
     return {
       "stop": stop,
@@ -28,18 +40,6 @@
       if (moment(a.time).isAfter(b.time)) return 1;
       return 0;
     });
-
-  let templateStation = function(s) {
-    let time = s.time;
-    let line = s.line;
-
-    return `
-    <div style="display:inline;position:relative;">
-      <saint-laurent-mini-badge label="${line}"></saint-laurent-mini-badge>
-      &nbsp;
-      <saint-laurent-time-new time="${time}"></saint-laurent-time-new>
-    </div>`
-  };
 
   class SaintLaurentNew extends HTMLElement {
     createdCallback() {

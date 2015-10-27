@@ -3,13 +3,13 @@
 
   const template = `
   <style type="text/css">
-    .saint-laurent-mini-badge {
+    .saint-laurent-badge {
       display:inline-block;
       margin: 0;
 
       width: 80px;
       height: 20px;
-      border-radius: 50%;
+      border-radius: 10px;
       overflow: hidden;
       background: #ccc;
 
@@ -17,10 +17,10 @@
       line-height: 20px;
     }
   </style>
-  <div class="saint-laurent-mini-badge" id="container"></div>
+  <div class="saint-laurent-badge" id="container"></div>
   `;
 
-  class MiniBadge extends HTMLElement {
+  class SaintLaurenBadge extends HTMLElement {
     createdCallback() {
       this.createShadowRoot().innerHTML = template;
       this.$container = this.shadowRoot.getElementById('container');
@@ -42,5 +42,5 @@
 
   }
 
-  document.registerElement('saint-laurent-mini-badge', MiniBadge);
+  document.registerElement('saint-laurent-badge', SaintLaurenBadge);
 })();
