@@ -2,25 +2,30 @@
   'use-strict';
 
   const template = `
-  <style type="text/css">
-    .saint-laurent {
-      display: flex;
-      flex-direction: column;
-    }
-  </style>
-  <div class="saint-laurent" id="container"></div>
-  `;
+    <style type="text/css">
+      .saint-laurent {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .saint-laurent-station {
+        display: inline;
+        position: relative;
+        margin: 0px;
+        padding: 5px;
+      }
+    </style>
+    <div class="saint-laurent" id="container"></div>`;
 
   function templateStation(s) {
     let time = s.time;
     let line = s.line;
 
     return `
-  <div style="display:inline;position:relative;">
-    <saint-laurent-badge label="${line}"></saint-laurent-badge>
-    &nbsp;
-    <saint-laurent-time-new time="${time}"></saint-laurent-time-new>
-  </div>`
+      <div class="saint-laurent-station">
+        <saint-laurent-badge line="${line}"></saint-laurent-badge>
+        <saint-laurent-time-new time="${time}"></saint-laurent-time-new>
+      </div>`;
   }
 
   function newStations(stop, route, direction) {
@@ -41,7 +46,7 @@
       return 0;
     });
 
-  class SaintLaurentNew extends HTMLElement {
+  class SaintLaurent extends HTMLElement {
     createdCallback() {
       this.createShadowRoot().innerHTML = template;
       this.$container = this.shadowRoot.getElementById('container');
@@ -72,14 +77,12 @@
         .then(flatten)
         .then(sortSchedules)
         .then(i => {
-          console.log(i)
           i.forEach(s => {
-            console.log(s)
             this.$container.innerHTML += templateStation(s);
           });
         });
     }
   }
 
-  document.registerElement('saint-laurent-new', SaintLaurentNew);
+  document.registerElement('saint-laurent-new', SaintLaurent);
 })();

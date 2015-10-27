@@ -1,9 +1,35 @@
 (function() {
   'use-strict';
 
+  const template = `
+  <style type="text/css">
+    :host {
+      display:inline-block;
+      position:relative;
+      margin: 0px;
+      padding: 0px;
+
+      height: 22px;
+      line-height: 22px;
+      vertical-align:middle;
+    }
+
+    .saint-laurent-time-new {
+      display:inline-block;
+      position:relative;
+      margin: 0px;
+
+      height: 22px;
+      line-height: 22px;
+      vertical-align:middle;
+    }
+  </style>
+  <div class="saint-laurent-time-new" id="container"></div>
+  `;
+
   class SaintLaurentTime extends HTMLElement {
     createdCallback() {
-      this.createShadowRoot().innerHTML = `<div style="display:inline;" id="container"></div>`;
+      this.createShadowRoot().innerHTML = template;
       this.$container = this.shadowRoot.getElementById('container');
 
       this._updateTime(this.getAttribute('time'));

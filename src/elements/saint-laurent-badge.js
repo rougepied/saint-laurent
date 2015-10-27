@@ -3,18 +3,45 @@
 
   const template = `
   <style type="text/css">
-    .saint-laurent-badge {
+    :host {
       display:inline-block;
-      margin: 0;
+      position:relative;
+      margin: 0px;
+      padding: 0px;
 
-      width: 80px;
-      height: 20px;
-      border-radius: 10px;
+      width: 22px;
+      height: 22px;
+      border-radius: 11px;
       overflow: hidden;
-      background: #ccc;
 
       text-align: center;
-      line-height: 20px;
+      line-height: 22px;
+      vertical-align:middle;
+    }
+
+    .saint-laurent-badge {
+      display:inline-block;
+      position:relative;
+      margin: 0px;
+
+      width: 22px;
+      height: 22px;
+      border-radius: 11px;
+      overflow: hidden;
+
+      text-align: center;
+      line-height: 22px;
+      vertical-align:middle;
+    }
+
+    .line-3 {
+      background: green;
+      color: white;
+    }
+
+    .line-9 {
+      background: blue;
+      color: white;
     }
   </style>
   <div class="saint-laurent-badge" id="container"></div>
@@ -25,19 +52,28 @@
       this.createShadowRoot().innerHTML = template;
       this.$container = this.shadowRoot.getElementById('container');
 
-      this._updateLabel(this.getAttribute('label'));
+      this._updateLabel(this.getAttribute('line'));
     };
 
     attributeChangedCallback(attrName, oldVal, newVal) {
       switch (attrName) {
-        case "label":
+        case "line":
           this._updateLabel(newVal);
           break;
       }
     };
 
     _updateLabel(value) {
-      this.$container.innerHTML = value;
+      let lineName = parseInt(value, 10).toString();
+      this.$container.innerHTML = lineName;
+
+      switch (lineName) {
+        case "3":
+          this.$container.classList.add("line-3");
+          break;
+        case "9":
+          this.$container.classList.add("line-9");
+      }
     };
 
   }
