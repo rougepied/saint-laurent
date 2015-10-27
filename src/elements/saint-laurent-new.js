@@ -1,6 +1,14 @@
 (function() {
   'use-strict';
 
+  function newStations(stop, route, direction) {
+    return {
+      "stop": stop,
+      "route": route,
+      "direction": direction
+    };
+  }
+
   let filterNull = array => array.filter(i => i !== null);
   let mapSchedules = i => i.map(j => j.schedules);
   let flatten = i => i.reduce((a, b) => a.concat(b))
@@ -15,32 +23,12 @@
   class SaintLaurentNew extends HTMLElement {
     createdCallback() {
       this.stations = [
-        {
-          stop: "1372",
-          route: "0009",
-          direction: "0"
-        },
-        {
-          stop: "1485",
-          route: "0071",
-          direction: "0"
-        },
-        {
-          stop: "1103",
-          route: "0003",
-          direction: "0"
-        },
-        {
-          stop: "1485",
-          route: "0051",
-          direction: "0"
-        }
+        newStations("1372", "0009", "0"),
+        newStations("1485", "0071", "0"),
+        newStations("1103", "0003", "0"),
+        newStations("1485", "0051", "0")
       ];
 
-      this._getAndSort();
-    }
-
-    _getAndSort() {
       var fetches = [];
       for (
       let i of this.stations) {
@@ -59,7 +47,6 @@
         .then(sortSchedules)
         .then(i => console.log(i));
     }
-
   }
 
   document.registerElement('saint-laurent-new', SaintLaurentNew);
