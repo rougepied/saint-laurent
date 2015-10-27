@@ -25,7 +25,6 @@
 </dom-module>
 
 <script>
-
   Polymer({
     is: "saint-laurent",
 
@@ -37,31 +36,7 @@
         {stop: "1103", route: "0003", direction:"0" , label: "3",  color: "darkgreen"},
         {stop: "1485", route: "0051", direction:"0" , label: "51", color: ""}
       ];
-      console.log('watch');
-
-      this._getAndSort();
-    },
-
-    _getAndSort() {
-      var fetches = [];
-      for (let i of this.stations) {
-
-        let param = [
-          ["stop", i.stop],
-          ["route", i.route],
-          ["direction", i.direction]
-        ]
-        .map(i => i.join("="))
-        .join("&");
-
-        fetches.push(fetch("/api/2.0?" + param)
-          .then(i => i.json())
-        );
-      }
-
-      Promise.all(fetches).then(i => console.log(i));
-
     }
-
   });
+
 </script>
