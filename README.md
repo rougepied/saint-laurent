@@ -26,7 +26,8 @@ _Note_: The `goapp` tool is part of the [Google App Engine SDK for Go](https://c
 
 # Front end
 
-Assuming that you have node, npm and [Brunch.io](http://brunch.io/) installed.
+Assuming that you have node (with npm) bower and [Brunch.io](http://brunch.io/) installed.
 
+	npm install
+	bower install
 	brunch b -P
-	

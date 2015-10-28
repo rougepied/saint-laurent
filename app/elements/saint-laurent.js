@@ -18,18 +18,18 @@
     <div class="saint-laurent" id="container"></div>
   `;
 
-  templateStation = (s) => `
+  const templateStation = (s) => `
       <div class="saint-laurent-station">
         <saint-laurent-badge line="${s.line}"></saint-laurent-badge>
         <saint-laurent-time time="${s.time}"></saint-laurent-time>
       </div>`;
 
 
-  newStation = (stop, route, direction) => ({
+  const newStation = (stop, route, direction) => ({
       "stop": stop,
       "route": route,
       "direction": direction
-  })
+  });
 
 
   let filterNull = array => array.filter(i => i !== null);

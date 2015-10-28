@@ -1,7 +1,7 @@
 (function() {
   'use-strict';
 
-  const template = `
+  const template = ` 
     <style type="text/css">
       .saint-laurent-badge {
         display:inline-block;

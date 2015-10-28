@@ -13,7 +13,8 @@ handlers:
   static_dir: public
 
 skip_files:
-- ^(.*/)?.*/static/bower_components/.*$
-- ^(.*/)?.*/static/*/bower\.json$
-- ^(.*/)?.*/node_modules/.*$
-- ^(.*/)?.*/package\.json$
+- ^node_modules/(.*/)?
+- ^bower_components/(.*/)?
+- ^app/(.*/)?
+- ^(.*/)?\.md$
+- ^brunch-config.js$
