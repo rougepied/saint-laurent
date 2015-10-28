@@ -17,7 +17,6 @@ import (
 )
 
 func init() {
-	http.Handle("/api/2.0", handleAPI(keyDefault))
 	http.Handle("/api/3.0", handleAPI3(keyDefault))
 }
 

@@ -17,10 +17,6 @@ import (
 	"time"
 )
 
-// const (
-// 	keyDefault = "XXXXXXXXXXXXXXX"
-// )
-
 // OpenData represents the main struct return by the Keolis-Rennes API.
 type OpenData struct {
 	// Request is a copy of the request passed to the Keolis-Rennes API
@@ -182,8 +178,6 @@ func handleAPI3(key string) http.Handler {
 		routeID := r.FormValue("route")
 		directionID := r.FormValue("direction")
 
-		//debugf(r, "\n%s, %s, %s\n", stopID, routeID, directionID)
-
 		// getting data from Keolis
 		ret, err := getBusNextDepartures3(r, key, stopID, routeID, directionID)
 		if err != nil {
@@ -203,103 +197,12 @@ func handleAPI3(key string) http.Handler {
 			return
 		}
 
-		debugf(r, "réponse : %s", msg)
-		fmt.Fprintf(w, "%s", msg)
-
-	})
-}
-
-// handleApi handle response to "/api/2.0"
-func handleAPI(key string) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		// parsing body
-
-		// vars := mux.Vars(r)
-		stopID := r.FormValue("stop")
-		routeID := r.FormValue("route")
-		directionID := r.FormValue("direction")
-
-		// getting data from Keolis
-		ret, err := getBusNextDepartures(r, key, stopID, routeID, directionID)
-		if err != nil {
-			http.Error(w, err.Error(), 500)
-			debugf(r, "%s", err.Error())
-			return
-		}
-
-		// responding
-		headers := w.Header()
-		headers["Content-Type"] = []string{"application/json"}
-
-		msg, err := json.MarshalIndent(ret, "", " ")
-		if err != nil {
-			http.Error(w, err.Error(), 500)
-			debugf(r, "%s", err.Error())
-			return
-		}
-
 		//		debugf(r, "réponse : %s", msg)
 		fmt.Fprintf(w, "%s", msg)
 	})
 }
 
-func unmarshalResponse(data []byte) (OpenData, error) {
-	decoder := xml.NewDecoder(bytes.NewBuffer(data))
-	decoder.Strict = false
-	var o OpenData
-	err := decoder.Decode(&o)
-
-	return o, err
-}
-
-func getBusNextDepartures(r *http.Request, key, stopID, routeID, directionID string) (*StopLine, error) {
-	var URL *url.URL
-	URL, err := url.Parse("http://data.keolis-rennes.com/xml/")
-	if err != nil {
-		debugf(r, "%s", err.Error())
-		return nil, err
-	}
-	parameters := url.Values{}
-	parameters.Add("key", key)
-	parameters.Add("cmd", "getbusnextdepartures")
-	parameters.Add("version", "2.2")
-	parameters.Add("param[mode]", "stopline")
-	parameters.Add("param[stop][]", stopID)
-	parameters.Add("param[route][]", routeID)
-	parameters.Add("param[direction][]", directionID)
-	URL.RawQuery = parameters.Encode()
-
-	fmt.Println(URL.String())
-
-	// getting URL result
-	// resp, err := http.Get(Url.String())
-	resp, err := get(r, URL.String())
-	if err != nil {
-		debugf(r, "%s", err.Error())
-		return nil, err
-	}
-	defer resp.Body.Close()
-
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		debugf(r, "%s", err.Error())
-		return nil, err
-	}
-
-	o, err := unmarshalResponse(body)
-	if err != nil {
-		debugf(r, "%s", err.Error())
-		return nil, err
-	}
-
-	if o.Answer == nil || o.Answer.Data == nil || o.Answer.Data.StopLine == nil {
-		debugf(r, "Response %v\n", o)
-		return nil, err
-	}
-	return o.Answer.Data.StopLine, err
-}
-
-//
+// getBusNextDepartures3 get the next departures for handleAPI3
 func getBusNextDepartures3(r *http.Request, key, stopID, routeID, directionID string) (*Response, error) {
 	var URL *url.URL
 	URL, err := url.Parse("http://data.keolis-rennes.com/xml/")
@@ -363,4 +266,14 @@ func getBusNextDepartures3(r *http.Request, key, stopID, routeID, directionID st
 	}
 
 	return response, err
+}
+
+// unmarshalResponse convert []byte to OpenData
+func unmarshalResponse(data []byte) (OpenData, error) {
+	decoder := xml.NewDecoder(bytes.NewBuffer(data))
+	decoder.Strict = false
+	var o OpenData
+	err := decoder.Decode(&o)
+
+	return o, err
 }

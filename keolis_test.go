@@ -13,7 +13,7 @@ import (
 
 var fakedResponse = []byte(`
 <opendata>
-<request>http://data.keolis-rennes.com/xml/?cmd=getbusnextdepartures&version=2.2&key=0IJG4L5FCR1EIBH&param[mode]=stopline&param[stop][]=1372&param[route][]=0009&param[direction][]=0</request>
+<request>http://data.keolis-rennes.com/xml/?cmd=getbusnextdepartures&version=2.2&key=xxxxxxxxx&param[mode]=stopline&param[stop][]=1372&param[route][]=0009&param[direction][]=0</request>
 <answer>
 	<status code="0" message="OK"/>
 	<data localdatetime="2015-05-21T13:35:54+02:00">
