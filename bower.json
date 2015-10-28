@@ -13,12 +13,7 @@
     "tests"
   ],
   "dependencies": {
-    "polymer": "~1.1.5",
-    "iron-ajax": "PolymerElements/iron-ajax#~1.0.6",
-    "iron-flex-layout": "PolymerElements/iron-flex-layout#~1.0.1",
-    "moment": "*"
-  },
-  "devDependencies": {
-    "web-component-tester": "*"
+    "moment": "~2.10.6",
+    "webcomponentsjs": "~0.7.15"
   }
 }

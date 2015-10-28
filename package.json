@@ -2,16 +2,8 @@
   "private": true,
   "License": "WTFPL",
   "devDependencies": {
-    "babel-core": "^5.8.25",
-    "gulp": "*",
-    "gulp-autoprefixer": "^3.1.0",
-    "gulp-babel": "*",
-    "gulp-crisper": "*",
-    "gulp-if": "*",
-    "gulp-load-plugins": "*",
-    "gulp-minify-html": "*",
-    "gulp-plumber": "*",
-    "gulp-uglify": "*",
-    "gulp-vulcanize": "*"
+    "babel-brunch": "^5.1.2",
+    "javascript-brunch": "^1.8.0",
+    "uglify-js-brunch": "^1.7.8"
   }
 }
