@@ -19,13 +19,13 @@ exports.config = {
     jshint: {
       pattern: /^app[\\\/].*\.js$/,
       options: {
+        browser: true,
         esnext: true,
         strict: false,
         globalstrict: true,
         curly: true,
         eqeqeq: true,
         forin: true,
-        predef: ["document", "window", "moment", "HTMLElement", "fetch"],
         undef: true,
         unused: true
       },
