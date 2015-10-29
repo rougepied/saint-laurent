@@ -3,7 +3,11 @@
 
   const template = `
     <style type="text/css">
+      @import url(https://fonts.googleapis.com/css?family=Roboto+Condensed);
+
       .saint-laurent-time {
+        font-family: 'Roboto Condensed', sans-serif;
+        
         display:inline-block;
         position:relative;
         margin: 0px;
