@@ -7,7 +7,7 @@
 
       .saint-laurent-time {
         font-family: 'Roboto Condensed', sans-serif;
-        
+
         display:inline-block;
         position:relative;
         margin: 0px;
@@ -19,7 +19,7 @@
       }
     </style>
     <div class="saint-laurent-time" id="container"></div>
-  `;
+  `.trim();
 
   class SaintLaurentTime extends HTMLElement {
     createdCallback() {

@@ -1,3 +1,12 @@
+/*
+`saint-laurent-badge` display the name of a bus line.
+
+Example:
+
+    <saint-laurent-badge line="9"></saint-laurent-badge>
+
+*/
+
 (function() {
   'use-strict';
 
@@ -16,6 +25,7 @@
         width: 22px;
         height: 22px;
 
+        font-size: 14px;
         text-align: center;
         line-height: 22px;
         vertical-align:middle;
@@ -34,14 +44,12 @@
       .line-51 {
         background: #6F2282;
         color: white;
-        font-size: smaller;
         border-radius: 11px;
       }
 
       .line-71 {
         background: #A96F23;
         color: white;
-        font-size: smaller
         border-radius: 11px;
       }
 
@@ -52,7 +60,7 @@
       }
     </style>
     <div class="saint-laurent-badge" id="container"></div>
-  `;
+  `.trim();
 
   class SaintLaurenBadge extends HTMLElement {
     createdCallback() {
