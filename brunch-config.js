@@ -5,9 +5,7 @@ exports.config = {
   files: {
     javascripts: {
       joinTo: {
-        "vendor.js": [
-          /^(bower_components|vendor)/
-        ],
+        "vendor.js": /^(bower_components|vendor)/,
         "app.js": "app/**/*.js"
       }
     }
@@ -27,7 +25,8 @@ exports.config = {
         eqeqeq: true,
         forin: true,
         undef: true,
-        unused: true
+        unused: true,
+        predef: ['moment', 'console']
       },
       warnOnly: true
     }
